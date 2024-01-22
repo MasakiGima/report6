@@ -1,8 +1,8 @@
 package jp.ac.uryukyu.ie.e205702;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+// import java.util.Collections;
+//import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,11 +10,8 @@ public class Babanuki{
     Deck deck1 = new Deck();
     Player players[] = new Player[2];
 
-    public Babanuki(){
-        
-    }
-
-    public void deliver(){//手札の配布
+    //手札の配布
+    public void deliver(){
         for(int i = 0;i < 26;i++){
             for (Player player : players) {
                 Random random = new Random();
@@ -45,9 +42,8 @@ public class Babanuki{
 
     public void beEqual1(){
         for(int i = 0; i < players[0].playerHands.size();i++){
-            if(players[0].playerHands.get(i).count != 100){
                 for(int j = i + 1; j < players[0].playerHands.size();j++){
-                    if(players[0].playerHands.get(j).count != 100){
+                    if(players[0].playerHands.get(i).count != 100){
                         if(players[0].playerHands.get(i).number == players[0].playerHands.get(j).number){
                             players[0].playerHands.get(i).set();
                             players[0].playerHands.get(j).set();
@@ -55,34 +51,33 @@ public class Babanuki{
                     }
                 }
             }
-        }
-         // 同じ番号の手札を消去
-        for(int i = 0;players[0].playerHands.size()> i; i++){
+        ArrayList<Card> set = new ArrayList<Card>(); 
+        for(int i = 0; i <players[0].playerHands.size(); i++){
             if(players[0].playerHands.get(i).count == 100){
-                players[0].playerHands.remove(i);
+            set.add(players[0].playerHands.get(i));
             }
         }
+        players[0].playerHands.removeAll(set);
     }
 
     public void beEqual2(){
         for(int i = 0; i < players[1].playerHands.size();i++){
-            if(players[1].playerHands.get(i).count != 100){
-                for(int j = i + 1; j < players[1].playerHands.size();j++){
-                    if(players[1].playerHands.get(j).count != 100){
-                        if(players[1].playerHands.get(i).number == players[1].playerHands.get(j).number){
-                            players[1].playerHands.get(i).set();
-                            players[1].playerHands.get(j).set();
-                        }
+            for(int j = i + 1; j < players[1].playerHands.size();j++){
+                if(players[1].playerHands.get(i).count != 100){
+                    if(players[1].playerHands.get(i).number == players[1].playerHands.get(j).number){
+                        players[1].playerHands.get(i).set();
+                        players[1].playerHands.get(j).set();
                     }
                 }
             }
         }
-         // nullを削除
-        for(int i = 0;players[1].playerHands.size()> i; i++){
+        ArrayList<Card> set = new ArrayList<Card>(); 
+        for(int i = 0; i <players[1].playerHands.size(); i++){
             if(players[1].playerHands.get(i).count == 100){
-                players[1].playerHands.remove(i);
+            set.add(players[1].playerHands.get(i));
             }
         }
+        players[1].playerHands.removeAll(set);
     }
 
     //ゲームを行っている人がカードを引くメソッド
@@ -90,12 +85,12 @@ public class Babanuki{
         Scanner card1 = new Scanner(System.in);
         System.out.printf("コンピューターはカードを%d枚持っています。何番目のカードを引きますか,指定できる番号は0番から%d番までです。",players[0].playerHands.size(),players[0].playerHands.size()-1);
         System.out.println("引きたいカードはコンピューターが持っている何番目のカードか入力してください");
-        int number = card1.nextInt();
+        int n = card1.nextInt();
         System.out.println("引いたカードはこちらです");
         enter();
-        tehudaCard(players[1].playerHands.get(number));//引いたカードを見るための文
-        players[0].playerHands.add(players[1].playerHands.get(number));
-        players[1].playerHands.remove(number);
+        tehudaCard(players[1].playerHands.get(n));//引いたカードを見るための文
+        players[0].playerHands.add(players[1].playerHands.get(n));
+        players[1].playerHands.remove(n);
         enter();
         System.out.println("自分の手札を確認してください");
         enter();
@@ -163,7 +158,7 @@ public class Babanuki{
         System.out.println("同じカードがあったら捨てますがよろしいですか");
         repetition();
         beEqual1();
-        //beEqual2();
+        beEqual2();
         System.out.println("捨てた後の手札がこちらです");
         enter();
         showTehuda1();
@@ -186,13 +181,6 @@ public class Babanuki{
             beEqual2();
         }
         finish();
-    }
-
-    public static void main(String[] args){
-        Babanuki babanuki = new Babanuki(); 
-        babanuki.players[0] = new Player("player1");
-        babanuki.players[1] = new Player("player2");
-        babanuki.game();
     }
 }
     
