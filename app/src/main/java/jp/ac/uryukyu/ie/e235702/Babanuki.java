@@ -23,7 +23,11 @@ public class Babanuki{
         players[rd].playerHands.add(deck1.deck.get(0));
 
     }
-
+    /**
+     * このメソッドは手札を確認するためのメソッド
+     * カードはCardクラス型で表示させると見にくいので記号と番号をたして一つの文字にした手札にあるカードをArrayListに追加して表示させている
+     * このメソッドはゲームをしているひとの手札をみせるだけである
+     */
     //プレイヤーの手札を確認するメソッド
     public void showTehuda1(){
         ArrayList <String> myCard;
@@ -38,6 +42,11 @@ public class Babanuki{
         System.out.println(i.display());
         }
 
+    /**
+     * このメソッドはプレイヤーの手札に同じ番号のカードが2枚あるなら2枚とも手札から捨てるメソッド
+     * 最初はもし同じ番号のカードが2枚あるならCardクラスカードののフィールドであるcountを2枚ともを100にして手札の中においておく
+     * 最後にcountが100のカードを全て新しいArrayListに追加してそれをまとめて消す
+     */
     public void beEqual1(){
         for(int i = 0; i < players[0].playerHands.size();i++){
                 for(int j = i + 1; j < players[0].playerHands.size();j++){
@@ -58,6 +67,10 @@ public class Babanuki{
         players[0].playerHands.removeAll(set);
     }
 
+    /**
+     *コンピューターの手札のカードを捨てるためのクラス
+     *  beEqual1とほとんど同じで同じカードが2枚あるなら2枚ともcountを100に変えて最後にcountが100のカードをまとめて消す
+     */
     public void beEqual2(){
         for(int i = 0; i < players[1].playerHands.size();i++){
             for(int j = i + 1; j < players[1].playerHands.size();j++){
@@ -78,6 +91,12 @@ public class Babanuki{
         players[1].playerHands.removeAll(set);
     }
 
+    /**
+     * プレイヤーがコンピューターの手札から引くメソッド
+     * コンピューターの手札の枚数をプリントする
+     * 何番のカードを指定するか聞いて入力された番号のカードをゲームしている人に見せる
+     * 指定したカードをaddでプレイヤーの手札に追加した後、コンピューターの手札から無くしている
+     */
     //ゲームを行っている人がカードを引くメソッド
     public void draw1(){
         Scanner card1 = new Scanner(System.in);
@@ -94,6 +113,10 @@ public class Babanuki{
         enter();
     }
 
+    /**
+     * draw1と似ていてコンピューターにカードを引かせるメソッド
+     * コンピューターは自分の意思で何番のカードを引くかは選べないのでランダムで番号を指定させてランダムで選ばれたカードを引かせる
+     */
     //コンピューターがカードを引くメソッド
     public void draw2(){
         Random card2 = new Random();
@@ -111,8 +134,11 @@ public class Babanuki{
         showTehuda1();
     }
 
-    //Enterを押すと次に進むメソッド
-    //何度か使いたいため、メソッド化しました
+    
+    /**
+     * enterを押すと次に進むメソッド
+     * 何度か使いたいため、メソッド化しました
+     */
     public void enter(){
         Scanner sc = new Scanner(System.in);
         System.out.println("");
@@ -123,6 +149,9 @@ public class Babanuki{
         System.out.println("ゲーム終了");
     }
 
+    /**
+     * ゲームで勝利した人を表示させるメソッド
+     */
     public void winner(){
         if(players[0].playerHands.size() == 0){
             System.out.println("勝者はプレイヤー1です。");
@@ -131,6 +160,11 @@ public class Babanuki{
         }
     }
 
+    /**
+     * 同じカードがある時に捨てさせるメソッド
+     * はい　　と入力させてそのように入力させたら次に進むようにしている
+     * はい　　と入力されなかったらはいと入力させるまで何度も繰り返す
+     */
     public void repetition(){
         Scanner sc = new Scanner(System.in);
         String yes = "はい";
@@ -147,6 +181,11 @@ public class Babanuki{
         }
     }
 
+    /**
+     * ゲームを実行するためのメソッド
+     * ゲームに必要なメソッドを上で作っているのでそれらのメソッドを使ってババ抜きをするメソッド
+     * このメソッドを使えばババ抜きができる
+     */
     //ゲームの初めは必ずプレイヤーから引くところからゲームスタートとする
     //コンピューターは初めは引かれる
     public  void game(){
