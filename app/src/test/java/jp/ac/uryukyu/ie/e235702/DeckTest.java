@@ -1,4 +1,4 @@
-package jp.ac.uryukyu.ie.e205702;
+package jp.ac.uryukyu.ie.e235702;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

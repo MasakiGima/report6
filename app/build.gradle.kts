@@ -37,10 +37,23 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("jp.ac.uryukyu.ie.e205702.App")
+    mainClass.set("jp.ac.uryukyu.ie.e235702.Main")
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "jp.ac.uryukyu.ie.e235702.Main"
+    }
+}
+
+// build.gradle.kts (Kotlin syntax)
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
+

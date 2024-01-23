@@ -1,14 +1,12 @@
-package jp.ac.uryukyu.ie.e205702;
+package jp.ac.uryukyu.ie.e235702;
 
 import java.util.ArrayList;
-// import java.util.Collections;
-//import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Babanuki{
     Deck deck1 = new Deck();
-    Player players[] = new Player[2];
+    public Player players[] = new Player[2];
 
     //手札の配布
     public void deliver(){
@@ -83,7 +81,7 @@ public class Babanuki{
     //ゲームを行っている人がカードを引くメソッド
     public void draw1(){
         Scanner card1 = new Scanner(System.in);
-        System.out.printf("コンピューターはカードを%d枚持っています。何番目のカードを引きますか,指定できる番号は0番から%d番までです。",players[0].playerHands.size(),players[0].playerHands.size()-1);
+        System.out.printf("コンピューターはカードを%d枚持っています。何番目のカードを引きますか,指定できる番号は0番から%d番までです。",players[1].playerHands.size(),players[1].playerHands.size()-1);
         System.out.println("引きたいカードはコンピューターが持っている何番目のカードか入力してください");
         int n = card1.nextInt();
         System.out.println("引いたカードはこちらです");
@@ -125,6 +123,14 @@ public class Babanuki{
         System.out.println("ゲーム終了");
     }
 
+    public void winner(){
+        if(players[0].playerHands.size() == 0){
+            System.out.println("勝者はプレイヤー1です。");
+        }else{
+            System.out.println("勝者はコンピューターです。");
+        }
+    }
+
     public void repetition(){
         Scanner sc = new Scanner(System.in);
         String yes = "はい";
@@ -164,7 +170,7 @@ public class Babanuki{
         showTehuda1();
         enter();
         System.out.println("ここからババ抜きを始めたいと思います");
-        while (players[0].playerHands.size() > 0||players[1].playerHands.size() > 0) {
+        while (players[0].playerHands.size() > 0 || players[1].playerHands.size() > 0) {
             System.out.println(players[0].playerName + "が引く番です");
             draw1();
             for(int i = 0;i < players[0].playerHands.size()-1;i++){
@@ -174,13 +180,19 @@ public class Babanuki{
                 }
             }
             repetition();
-            beEqual1();
+            beEqual1();if(players[0].playerHands.size() == 0 || players[1].playerHands.size() == 0){
+                break;
+            }
             showTehuda1();
             System.out.println("コンピューターが引く番です");
             draw2();
             beEqual2();
+            if(players[0].playerHands.size() == 0 || players[1].playerHands.size() == 0){
+                break;
+            }
         }
         finish();
+        winner();
     }
 }
     
